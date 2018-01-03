@@ -1,0 +1,156 @@
+.btn:focus, .upload-btn:focus{
+  outline: 0 !important;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-color: #184962;
+}
+
+body {
+  text-align: center;
+}
+
+.row {
+  margin-top: 80px;
+}
+
+.upload-btn {
+  color: #ffffff;
+  background-color: #fed136;
+  border: none;
+}
+
+.upload-btn:hover,
+.upload-btn:focus,
+.upload-btn:active,
+.upload-btn.active {
+  color: #ffffff;
+  background-color: #fec503;
+  border: none;
+}
+
+h4 {
+  padding-bottom: 30px;
+  color: #B8BDC1;
+}
+
+h2 {
+  margin-top: 15px;
+  color: #68757E;
+}
+
+.panel {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.main-container {
+    width: 80%;
+    margin:0 auto;
+  }
+
+@media (min-width: 768px) {
+  .container {
+    width: 100%;
+  }
+  .main-container {
+    max-width: 450px;
+    margin:0 auto;
+  }
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 0.625rem 1.25rem;
+    /* 10px 20px */
+    line-height: 1.15;
+    text-align: left;
+}
+
+.inputfile:focus + label,
+.inputfile.has-focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.inputfile + label * {
+    /* pointer-events: none; */
+    /* in case of FastClick lib use */
+}
+
+.inputfile + label svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+    margin-top: -0.25em;
+    /* 4px */
+    margin-right: 0.25em;
+    /* 4px */
+}
+
+.inputfile-6 + label {
+    border: 1px solid #fed136;
+    background-color: #ffffff;
+    color: #184962;
+    padding: 0;
+}
+
+.inputfile-6:focus + label,
+.inputfile-6.has-focus + label,
+.inputfile-6 + label:hover {
+    border-color: #fec503;
+}
+
+.inputfile-6 + label span,
+.inputfile-6 + label strong {
+    padding: 0.625rem 1.25rem;
+    /* 10px 20px */
+}
+
+.inputfile-6 + label span {
+    width: 200px;
+    min-height: 2em;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.inputfile-6 + label strong {
+    height: 100%;
+    color: #ffffff;
+    background-color: #fed136;
+    display: inline-block;
+    text-align: center;
+}
+
+.inputfile-6:focus + label strong,
+.inputfile-6.has-focus + label strong,
+.inputfile-6 + label:hover strong {
+    background-color: #fec503;
+}
+
+@media screen and (max-width: 50em) {
+  .inputfile-6 + label strong {
+    display: block;
+  }
+}
