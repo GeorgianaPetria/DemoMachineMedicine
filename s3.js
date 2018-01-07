@@ -20,7 +20,7 @@ function s3Params(config, params) {
   var policyBase64 = new Buffer(JSON.stringify(policy)).toString('base64');
   return {
     key: params.filename,
-    acl: 'public-read',
+    acl: 'private',
     success_action_status: '201',
     policy: policyBase64,
     "content-type": params.contentType,

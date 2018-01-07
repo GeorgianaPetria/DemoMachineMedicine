@@ -8,6 +8,8 @@ $('.upload-btn').on('click', function (){
 
 $('#upload-input').on('change', function(){
   $('#require-selection').text("");
+  $('.progress-bar').text('0%');
+  $('.progress-bar').width('0%');
 });
 
 $('#uploadVideo').submit(function(){
