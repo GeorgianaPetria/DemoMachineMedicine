@@ -48,7 +48,7 @@ function s3UploadPolicy(config, params, credential) {
     conditions: [
       { bucket: config.bucket },
       { key: params.filename },
-      { acl: 'public-read' },
+      { acl: 'private' },
       { success_action_status: "201" },
       // Optionally control content type and file size
       // A content-type clause is required (even if it's all-permissive)
