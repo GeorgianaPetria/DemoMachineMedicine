@@ -17,9 +17,11 @@ AWS.config.region = process.env.REGION
 
 var sns = new AWS.SNS();
 var ddb = new AWS.DynamoDB();
+var sqs = new AWS.SQS({apiVersion: '2012-11-05'});
 
 var ddbTable =  process.env.ANALYSIS_REQUEST_TABLE;
 var snsTopic =  process.env.NEW_ANALYSIS_REQUEST_TOPIC;
+var sqsUrl = process.env.NEW_VIDEO_UPLOADED_QUEUE;
 
 var app = express();
 
@@ -63,23 +65,56 @@ app.post('/analyse', function(request, response) {
 
         response.status(returnStatus).end();
           console.log('DDB Error: ' + err);
-        } else {
-          sns.publish({
-            'Message': 'Name: ' + request.body.name + "\r\nEmail: " + request.body.email 
-                + "\r\nFilename: " + request.body.filename 
-                + "\r\nLocation: " + request.body.location,
-                    'Subject': 'New analysis request!!!',
-                    'TopicArn': snsTopic
-                }, function(err, data) {
-                    if (err) {
-                        response.status(500).end();
-                        console.log('SNS Error: ' + err);
-                    } else {
-                        response.status(201).end();
-                    }
-                });            
-            }
+      } else {
+        sns.publish({
+          'Message': 'Name: ' + request.body.name + "\r\nEmail: " + request.body.email
+              + "\r\nFilename: " + request.body.filename
+              + "\r\nLocation: " + request.body.location,
+                  'Subject': 'New analysis request!!!',
+                  'TopicArn': snsTopic
+        }, function(err, data) {
+              if (err) {
+                response.status(500).end();
+                console.log('SNS Error: ' + err);
+              } else {
+                response.status(201).end();
+              }
         });
+
+        var params = {
+          DelaySeconds: 10,
+          MessageAttributes: {
+            "name": {
+              DataType: "String",
+              StringValue: request.body.name
+            },
+            "email": {
+              DataType: "String",
+              StringValue: request.body.email
+            },
+            "filename": {
+              DataType: "String",
+              StringValue: request.body.filename
+            },
+            "location": {
+              DataType: "String",
+              StringValue: request.body.location
+            }
+          },
+          MessageBody: "Information about video analysis request.",
+          QueueUrl: sqsUrl
+        };
+
+        sqs.sendMessage(params, function(err, data) {
+          if (err) {
+            console.log("Error", err);
+          } else {
+            console.log("Success", data.MessageId);
+          }
+        });
+
+      }
+    });
   } else {
     response.status(400).send('Name, email and at least one file are required');
   }
